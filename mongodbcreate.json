@@ -1,0 +1,7 @@
+use mydb
+switched to db mydb
+> db.employee.insertMany( [
+...     { "id" : "101", "firstName" : "Elon", "lastName": "Musk", "companyName":"Tesla" },
+...     { "id" : "102", "firstName" : "Steve", "lastName": "Jobbs", "companyName":"Apple" },
+...     { "id" : "97", "firstName" : "Sundar", "lastName": "Pichai", "companyName":"Google" }
+... ] );
