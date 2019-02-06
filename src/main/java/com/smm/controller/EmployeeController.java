@@ -34,7 +34,24 @@ public class EmployeeController {
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("empAttr") Employee employee) {
-		employeeService.addEmployee(employee);
+		if(employee.getId() != null && !employee.getId().trim().equals("")) {
+            employeeService.editEmployee(employee);
+        } else {
+            employeeService.addEmployee(employee);
+        }
+        return "redirect:list";
+    }
+	
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public String editUser(@RequestParam(value="id", required=true) String id, Model model) {
+        
+        model.addAttribute("empAttr", employeeService.findEmployeeId(id));     
+        return "form";
+    }
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String delete(@RequestParam(value="id", required=true) String id, Model model) {
+        employeeService.deleteEmployee(id);
         return "redirect:list";
     }
 }
