@@ -35,6 +35,12 @@
                             <td><c:out value="${employee.firstName}" /></td>
                             <td><c:out value="${employee.lastName}" /></td>
                             <td><c:out value="${employee.companyName}" /></td>
+                            <td>
+                                <a id="update" href="/employee/edit?id=${employee.id}" class="btn btn-warning">Update</a>
+                            </td>
+                            <td>
+                                <a id="delete" href="/employee/delete?id=${employee.id}" class="btn btn-danger">Delete</a>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>
