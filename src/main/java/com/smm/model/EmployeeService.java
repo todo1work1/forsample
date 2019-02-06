@@ -115,4 +115,13 @@ public class EmployeeService {
         
         return empObject;
     }
+	
+     private DBObject getDBObject(String id) {
+        DBCollection coll = MongoFactory.getCollection(dbName, collectionName);
+ 
+        DBObject where_query = new BasicDBObject();
+ 
+        where_query.put("id", id);
+        return coll.findOne(where_query);
+    }
 }
