@@ -52,4 +52,67 @@ public class EmployeeService {
 		}
 		 return returnVal;
 	}
+	
+	public Boolean editEmployee(Employee employee) {
+        boolean output = false;
+        
+        try {
+            BasicDBObject existing = (BasicDBObject) getDBObject(employee.getId());
+ 
+            DBCollection coll = MongoFactory.getCollection(dbName, collectionName);
+ 
+            
+            BasicDBObject empObject = new BasicDBObject();
+            empObject.put("id", String.valueOf(new Random().nextInt(100)));
+			empObject.put("firstName", employee.getFirstName());
+			empObject.put("lastName", employee.getLastName());
+			empObject.put("companyName", employee.getCompanyName());
+ 
+            
+            coll.update(existing, empObject);
+            output = true;
+        } catch (Exception e) {
+            output = false;
+                     
+        }
+        return output;
+    }
+	
+	public Boolean deleteEmployee(String id) {
+        boolean output = false;
+        
+        try {
+            
+            BasicDBObject item = (BasicDBObject) getDBObject(id);
+ 
+            DBCollection coll = MongoFactory.getCollection(dbName, collectionName);
+ 
+            
+            coll.remove(item);
+            output = true;          
+        } catch (Exception e) {
+            output = false;
+                  
+        }   
+        return output;
+    }
+	
+	
+	public Employee findEmployeeId(String id) {
+        Employee empObject = new Employee();
+        DBCollection coll = MongoFactory.getCollection(dbName, collectionName);
+ 
+        
+        DBObject where_query = new BasicDBObject();
+        where_query.put("id", id);
+ 
+        DBObject dbo = coll.findOne(where_query);       
+        empObject.setId(dbo.get("id").toString());
+        empObject.setFirstName(dbo.get("firstName").toString());
+		empObject.setLastName(dbo.get("lastName").toString());
+		empObject.setCompanyName(dbo.get("companyName").toString());
+ 
+        
+        return empObject;
+    }
 }
